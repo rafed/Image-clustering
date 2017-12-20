@@ -23,7 +23,7 @@ public class ImgProcessor {
 		return image;
 	}
 	
-	public static Color changeContrast(Color color, int contrast){
+	private static Color changeContrast(Color color, int contrast){
 		
 		int factor = (259 * (contrast + 255)) / (255 * (259 - contrast));
 		
@@ -34,7 +34,7 @@ public class ImgProcessor {
 		return new Color(r, g, b);
 	}
 	
-	public static Color changeBrightness(Color color, int brightness){
+	private static Color changeBrightness(Color color, int brightness){
 		
 		int r = truncate(color.getRed() + brightness);
 		int g = truncate(color.getGreen() + brightness);

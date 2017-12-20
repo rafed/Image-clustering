@@ -19,31 +19,35 @@ public class Main {
 	public static void main(String[] args) throws Exception{
 
 		/*** Tweak here to give different effects!!! ****/
-		int numOfClusters = 3; 			// should not be > 27, if cluster is colored
-		int numOfKmeansIteration = 30; 	// number of times to be averaged
-		int comparisonOn = brightness; 	// (hue/brightness/saturation)
+		int numOfClusters = 10; 		// should not be > 27, if cluster is colored
+		int numOfKmeansIteration = 5; 	// number of times to be averaged
+		int type = averaged;			//(averaged/colored)
+		int comparisonOn = hue; 		// (hue/brightness/saturation)
 		int contrast = 0;
 		int brightness = 0;
 		/*****************************************/
 		
-		File input = new File("path to your input file.jpg");
+		File input = new File("/path/to/input.jpg");
 		BufferedImage image = ImageIO.read(input);	
 		
-		File output = new File("path to your output file");
+		File output = new File("/path/to/output.jpg");
 		
 		Cluster cluster = new Cluster(numOfClusters, comparisonOn);
-		cluster.distributeColors(image, random);
+		cluster.distributeColors(image, equal);
 		cluster.runKMeans(numOfKmeansIteration);
-		image = cluster.applyClustering(image, colored); //(averaged/colored)
+		image = cluster.applyClustering(image, type); 
 		
 		image = ImgProcessor.applyTweaks(image, contrast, brightness);
 		
+		
+		System.out.println("[*] Writing image to disk.");
 		try {
 			ImageIO.write(image, "jpg", output);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("[*] Image written to disk.");
+		
+		System.out.println("[*] Done.");
 	}
 	
 }
